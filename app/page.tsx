@@ -53,7 +53,11 @@ const HomePage = () => {
           <h2 className="text-2xl font-bold mb-4">Tags populaires</h2>
           <div className="flex space-x-4">
             {['Technologie', 'Développement', 'AI', 'Web'].map((tag) => (
-              <Link key={tag} href={`/tags/${tag.toLowerCase()}`}>
+              <Link
+                key={tag}
+                href={`/articles
+              `}
+              >
                 <span className="bg-blue-100 text-blue-600 px-4 py-2 rounded-full cursor-pointer hover:bg-blue-200">
                   {tag}
                 </span>
