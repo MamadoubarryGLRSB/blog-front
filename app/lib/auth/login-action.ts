@@ -1,5 +1,7 @@
 'use server';
 
+import { createSession } from '../actions/session/session';
+
 interface LoginPayload {
   email: string;
   password: string;
@@ -19,9 +21,10 @@ export async function login(data: LoginPayload) {
       throw new Error('Erreur de connexion. Vérifiez vos identifiants.');
     }
 
-    const res = await response.json();
+    const sessionData = await response.json();
+    await createSession(sessionData);
 
-    return res;
+    return sessionData;
   } catch (error) {
     throw new Error((error as Error).message || 'Erreur lors de la connexion.');
   }

@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { likeArticle, unlikeArticle, addComment, fetchComments } from '@/app/lib/actions/article-actions';
 import { useRouter } from 'next/navigation';
 import { FaThumbsDown, FaThumbsUp } from 'react-icons/fa';
+import toast from 'react-hot-toast';
+
 interface Comment {
   id: string;
   content: string;
@@ -40,17 +42,15 @@ export default function ArticleModal({ isOpen, onClose, article }: ArticleModalP
   const router = useRouter();
 
   const redirectToLogin = () => {
+    toast.error('Vous devez être connecté pour effectuer cette action.');
     router.push('/login');
   };
-  const [hasLiked, setHasLiked] = useState(false); // Indique si l'utilisateur a liké
-  const [hasUnliked, setHasUnliked] = useState(false); // Indique si l'utilisateur a unliké
 
-  // Récupérer les commentaires lorsque le modal est ouvert
   useEffect(() => {
     if (isOpen) {
       fetchComments(article.id)
         .then((data) => setComments(data))
-        .catch((err) => console.error('Erreur lors de la récupération des commentaires:', err));
+        .catch(() => toast.error('Erreur lors de la récupération des commentaires.'));
     }
   }, [isOpen, article.id]);
 
@@ -63,10 +63,9 @@ export default function ArticleModal({ isOpen, onClose, article }: ArticleModalP
     try {
       await likeArticle(article.id, token);
       setLikes((prevLikes) => prevLikes + 1);
-      setHasLiked(true);
-      setHasUnliked(false); // Désactiver unlike si like est actif
-    } catch (error) {
-      console.error(error);
+      toast.success('Article liké avec succès !');
+    } catch {
+      toast.error('Vous avez déjà liké cet article.');
     }
   };
 
@@ -79,15 +78,17 @@ export default function ArticleModal({ isOpen, onClose, article }: ArticleModalP
     try {
       await unlikeArticle(article.id, token);
       setLikes((prevLikes) => Math.max(prevLikes - 1, 0));
-      setHasLiked(false);
-      setHasUnliked(true); // Activer unlike
-    } catch (error) {
-      console.error(error);
+      toast.success('Like retiré avec succès !');
+    } catch {
+      toast.error('Vous n’avez pas encore liké cet article.');
     }
   };
 
   const handleComment = async () => {
-    if (!newComment.trim()) return;
+    if (!newComment.trim()) {
+      toast.error('Le commentaire ne peut pas être vide.');
+      return;
+    }
 
     if (!token) {
       redirectToLogin();
@@ -99,9 +100,10 @@ export default function ArticleModal({ isOpen, onClose, article }: ArticleModalP
       setNewComment('');
       fetchComments(article.id)
         .then((data) => setComments(data))
-        .catch((err) => console.error('Erreur lors de la mise à jour des commentaires:', err));
-    } catch (error) {
-      console.error(error);
+        .catch(() => toast.error('Erreur lors de la mise à jour des commentaires.'));
+      toast.success('Commentaire ajouté avec succès !');
+    } catch {
+      toast.error('Erreur lors de l’ajout du commentaire.');
     }
   };
 
@@ -116,13 +118,11 @@ export default function ArticleModal({ isOpen, onClose, article }: ArticleModalP
         <p className="text-sm text-gray-400">Publié le : {new Date(article.createdAt).toLocaleDateString()}</p>
 
         <div className="mt-4 flex space-x-4 items-center">
-          {/* Pouce vers le haut avec compteur */}
           <div className="flex items-center space-x-2">
             <FaThumbsUp onClick={handleLike} className="cursor-pointer text-2xl text-blue-500 hover:text-blue-600" />
             <span className="text-gray-800">{likes}</span>
           </div>
 
-          {/* Pouce vers le bas avec compteur */}
           <div className="flex items-center space-x-2">
             <FaThumbsDown onClick={handleUnlike} className="cursor-pointer text-2xl text-red-500 hover:text-red-600" />
           </div>
