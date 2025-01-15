@@ -20,3 +20,20 @@ export interface Article {
   published: boolean;
   createdAt: string;
 }
+
+export type Comment = {
+  id: string;
+  content: string;
+  authorId: string;
+  articleId: string;
+  createdAt: string;
+  updatedAt: string;
+  author: {
+    id: string;
+    email: string;
+    password: string;
+    username: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+};

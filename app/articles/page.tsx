@@ -1,7 +1,10 @@
 import ArticlesWrapper from '@/components/articles/articles-wrappers';
 
+// Indique que la page doit toujours être rendue dynamiquement
+export const dynamic = 'force-dynamic';
+
 // Fonction pour récupérer les articles côté serveur
-export async function getArticles() {
+async function getArticles() {
   try {
     const res = await fetch('http://localhost:3000/articles', {
       cache: 'no-store' // Empêche la mise en cache pour garantir des données fraîches

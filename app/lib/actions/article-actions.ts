@@ -1,5 +1,6 @@
 'use server';
 
+import { Comment } from '@/ts/profile';
 import { revalidateTag } from 'next/cache';
 
 export async function likeArticle(articleId: string, token: string): Promise<void> {
@@ -67,7 +68,7 @@ export async function addComment(articleId: string, content: string, token: stri
   revalidateTag('articles');
 }
 
-export async function fetchComments(articleId: string): Promise<unknown[]> {
+export async function fetchComments(articleId: string): Promise<Comment[]> {
   const res = await fetch(`http://localhost:3000/articles/${articleId}/comments`);
 
   if (!res.ok) {
