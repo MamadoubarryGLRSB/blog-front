@@ -115,7 +115,7 @@ export default function ArticlesWrapper({ articlesResponse }: ArticlesWrapperPro
                   ))}
                 </div>
               )}
-              <button onClick={() => openModal(article)} className="text-blue-500 mt-4 block">
+              <button onClick={() => openModal(article)} className="text-blue-500 mt-4 block" id="detail-article">
                 Lire la suite
               </button>
             </div>

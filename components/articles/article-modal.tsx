@@ -119,12 +119,20 @@ export default function ArticleModal({ isOpen, onClose, article }: ArticleModalP
 
         <div className="mt-4 flex space-x-4 items-center">
           <div className="flex items-center space-x-2">
-            <FaThumbsUp onClick={handleLike} className="cursor-pointer text-2xl text-blue-500 hover:text-blue-600" />
+            <FaThumbsUp
+              onClick={handleLike}
+              className="cursor-pointer text-2xl text-blue-500 hover:text-blue-600"
+              id="like-button"
+            />
             <span className="text-gray-800">{likes}</span>
           </div>
 
           <div className="flex items-center space-x-2">
-            <FaThumbsDown onClick={handleUnlike} className="cursor-pointer text-2xl text-red-500 hover:text-red-600" />
+            <FaThumbsDown
+              onClick={handleUnlike}
+              className="cursor-pointer text-2xl text-red-500 hover:text-red-600"
+              id="unlike-button"
+            />
           </div>
         </div>
 
@@ -147,12 +155,14 @@ export default function ArticleModal({ isOpen, onClose, article }: ArticleModalP
         <div className="mt-6">
           <textarea
             value={newComment}
+            id="comment-input"
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Écrivez votre commentaire ici"
             className="w-full p-2 border rounded-lg"
           ></textarea>
           <button
             onClick={handleComment}
+            id="submit-comment"
             className="mt-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
           >
             Envoyer
@@ -160,7 +170,11 @@ export default function ArticleModal({ isOpen, onClose, article }: ArticleModalP
         </div>
 
         <div className="mt-6 flex justify-end">
-          <button onClick={onClose} className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+            id="close-modal"
+          >
             Fermer
           </button>
         </div>

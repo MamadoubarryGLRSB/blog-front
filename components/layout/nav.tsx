@@ -56,28 +56,32 @@ const Navbar = () => {
 
       {/* Navigation */}
       <div className="flex space-x-6">
-        <Link href="/articles" className="hover:text-gray-300">
+        <Link href="/articles" className="hover:text-gray-300" id="nav_article">
           Articles
         </Link>
-        <Link href="/about" className="hover:text-gray-300">
+        <Link href="/about" className="hover:text-gray-300" id="nav_about">
           À propos
         </Link>
-        <Link href="/contact" className="hover:text-gray-300">
+        <Link href="/contact" className="hover:text-gray-300" id="nav_contact">
           Contact
         </Link>
       </div>
 
       {/* Icone utilisateur avec menu */}
-      <div className="relative">
+      <div className="relative" id="menu_user">
         <FaUserCircle size={28} className="cursor-pointer" onClick={toggleMenu} />
         {menuOpen && (
           <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-md shadow-lg z-10">
             {isAuth ? (
               <>
-                <Link href="/profile" className="block px-4 py-2 hover:bg-gray-100">
+                <Link href="/profile" className="block px-4 py-2 hover:bg-gray-100" id="profil_link">
                   <FiUser className="mr-2" /> Profil
                 </Link>
-                <button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:bg-gray-100">
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  id="logout"
+                >
                   <FiLogOut className="mr-2" /> Déconnexion
                 </button>
               </>
