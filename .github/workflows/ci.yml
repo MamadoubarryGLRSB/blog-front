@@ -26,15 +26,27 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # 4. Installer les navigateurs Playwright
+      # 4. Construire l'application
+      - name: Build application
+        run: npm run build
+
+      # 5. Démarrer le serveur en arrière-plan
+      - name: Start server
+        run: npm run start & # Le `&` permet de démarrer le serveur en arrière-plan
+
+      # 6. Attendre que le serveur soit prêt
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:3001
+
+      # 7. Installer les navigateurs Playwright
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      # 5. Exécuter les tests Playwright
+      # 8. Exécuter les tests Playwright
       - name: Run Playwright E2E tests
         run: npx playwright test
 
-      # 6. Upload Playwright report (optionnel)
+      # 9. Upload Playwright report (optionnel)
       - name: Upload Playwright Report
         if: failure() # Exécuter uniquement en cas d'échec
         uses: actions/upload-artifact@v3
