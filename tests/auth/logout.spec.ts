@@ -14,6 +14,8 @@ test.describe('Logout user', () => {
     await page.locator('#password').fill('@RamatouBah52#');
     await page.click('button[type="submit"]');
   });
+
+  //logout
   test('should be logout in', async () => {
     const menuLink = page.locator('#menu_user');
     await menuLink.click();

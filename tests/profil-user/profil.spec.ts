@@ -8,12 +8,14 @@ test.beforeAll(async ({ browser }) => {
   await page.goto('http://localhost:3001/login');
 });
 
+//Test profil user
 test.describe('Profil user', () => {
   test('should be logged in', async () => {
     await page.locator('#email').fill('barry@gmail.com');
     await page.locator('#password').fill('@RamatouBah52#');
     await page.click('button[type="submit"]');
   });
+
   test('should be profil user in', async () => {
     const menuLink = page.locator('#menu_user');
     await menuLink.click();

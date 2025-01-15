@@ -2,11 +2,13 @@ import type { Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
 let page: Page;
 
+//lance l'application
 test.beforeAll(async ({ browser }) => {
   page = await browser.newPage();
   await page.goto('http://localhost:3001');
 });
 
+//Test navigation
 test.describe('Navigation (E2E)', () => {
   test('should go to about page', async () => {
     const aboutLink = page.locator('#nav_about');

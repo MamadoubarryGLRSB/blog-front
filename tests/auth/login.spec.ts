@@ -8,7 +8,10 @@ test.beforeAll(async ({ browser }) => {
   await page.goto('http://localhost:3001/login');
 });
 
+//Connexion de user
+
 test.describe('Login user', () => {
+  //Mot de pass incorrect
   test('should not be logged in', async () => {
     await page.locator('#email').fill('barry@gmail.com');
     await page.locator('#password').fill('azeertt');
@@ -19,6 +22,7 @@ test.describe('Login user', () => {
     expect(msgSuccess).toContain('Erreur de connexion. Vérifiez vos identifiants.');
   });
 
+  //mot de passe valide
   test('should be logged in', async () => {
     await page.locator('#email').fill('barry@gmail.com');
     await page.locator('#password').fill('@RamatouBah52#');
